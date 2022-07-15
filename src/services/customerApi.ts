@@ -5,7 +5,22 @@ const baseAPI = axios.create({
 });
 
 export interface Customer {
-  _id: string;
+  _id?: string;
+  name: string;
+  email: string;
+  number: string;
+  idCategory: string;
+  address: Address;
+}
+
+interface Address {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+export interface CreateCustomerInterface {
   name: string;
   email: string;
   number: string;
@@ -20,7 +35,9 @@ export function getCustomers(): Promise<AxiosResponse<Customer[]>> {
   return baseAPI.get("/clients");
 }
 
-export function createCustomer(customer: Customer): Promise<AxiosResponse> {
+export function createCustomer(
+  customer: CreateCustomerInterface
+): Promise<AxiosResponse> {
   return baseAPI.post(`/clients`, customer);
 }
 
@@ -30,7 +47,7 @@ export function deleteCustomer(idCustomer: string): Promise<AxiosResponse> {
 
 export function updateCustomer(
   idCustomer: string,
-  customer: Customer
+  customer: CreateCustomerInterface
 ): Promise<AxiosResponse> {
   return baseAPI.put(`/clients/${idCustomer}`, customer);
 }

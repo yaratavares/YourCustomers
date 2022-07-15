@@ -3,8 +3,11 @@ import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
 import { Customer } from "../services/customerApi";
+import { CustomerInfos } from "./CustomerInfos";
+import BasicModal from "./Modal";
 
 const styles = {
   box: {
@@ -32,17 +35,30 @@ interface Props {
 }
 
 export function CustomerCard({ customer }: Props) {
+  const [activeModal, setActiveModal] = useState(false);
+
   return (
     <Box sx={styles.box}>
       <Paper sx={styles.paper} elevation={4}>
-        <Typography variant="h6">Yara Cristina Tavares</Typography>
+        <Typography variant="h6">{customer.name}</Typography>
         <Box sx={styles.container}>
-          <Chip label="Vip" variant="outlined" sx={styles.chip} />
-          <Button size="small" sx={styles.button}>
+          {customer.idCategory === "Vip" ? (
+            <Chip label="Vip" variant="outlined" sx={styles.chip} />
+          ) : (
+            ""
+          )}
+          <Button
+            size="small"
+            sx={styles.button}
+            onClick={() => setActiveModal(!activeModal)}
+          >
             Details
           </Button>
         </Box>
       </Paper>
+      <BasicModal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <CustomerInfos customer={customer} />
+      </BasicModal>
     </Box>
   );
 }

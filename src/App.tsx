@@ -6,6 +6,14 @@ import Dashboard from "./pages/Dashboard";
 
 export default function App(): JSX.Element {
   const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#673ab7",
+      },
+      secondary: {
+        main: "#ffb300",
+      },
+    },
     typography: {
       fontFamily: "PT Sans, sans-serif",
       fontWeightLight: "400",
