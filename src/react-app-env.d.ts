@@ -1,3 +1,5 @@
 /// <reference types="react-scripts" />
-declare module "*.jpg";
-declare module "*.png";
+
+interface ImportMetaEnv {
+  readonly BASE_API_URL: string;
+}
