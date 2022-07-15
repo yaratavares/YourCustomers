@@ -2,23 +2,44 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { FormEvent, SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
+import useCreateCustomer from "../hooks/api/useCreateCustomer";
+import { Category, getCategories } from "../services/categoryApi";
 import { CreateCustomerInterface } from "../services/customerApi";
+import validateDataCustomers from "../validation/validateDataCustomer";
 import Input, { InputInformation } from "./Input";
+import InputSelect from "./InputSelect";
 
 const inputs: InputInformation[] = [
   { type: "name", label: "Name" },
-  { type: "tel", label: "Number" },
+  { type: "number", label: "Number" },
   { type: "email", label: "Email" },
-  { type: "name", label: "Category" },
-  { type: "name", label: "Zip" },
-  { type: "name", label: "Street" },
-  { type: "name", label: "City" },
-  { type: "name", label: "State" },
+  { type: "zip", label: "Zip" },
+  { type: "street", label: "Street" },
+  { type: "city", label: "City" },
+  { type: "state", label: "State" },
 ];
 
-export function CreateCustomer(): JSX.Element {
+const styles = {
+  box: { display: "flex", flexDirection: "column" },
+  icon: {
+    position: "absolute",
+    top: "15px",
+    right: "12px",
+  },
+};
+
+interface Props {
+  setActiveModal: React.Dispatch<SetStateAction<boolean>>;
+  reloadPage: () => Promise<void>;
+}
+
+export function CreateCustomer({
+  setActiveModal,
+  reloadPage,
+}: Props): JSX.Element {
   const [data, setData] = useState<CreateCustomerInterface>({
     name: "",
     email: "",
@@ -29,23 +50,49 @@ export function CreateCustomer(): JSX.Element {
     state: "",
     zip: "",
   });
-  console.log(data);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const { createCustomer, createCustomerLoading } = useCreateCustomer();
+
+  async function initCategories() {
+    const result = await getCategories();
+    setCategories(result.data);
+  }
+
+  useEffect(() => {
+    initCategories();
+  }, []);
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    const validated = validateDataCustomers(data);
+    if (validated === true) {
+      await createCustomer(data);
+      toast.success("New customer added");
+      await reloadPage();
+      setActiveModal(false);
+    }
+  }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={styles.box}
+      component="form"
+      onSubmit={(e: FormEvent) => onSubmit(e)}
+    >
       <CloseOutlinedIcon
-        sx={{
-          position: "absolute",
-          top: "15px",
-          right: "12px",
-          color: "primary",
-        }}
+        sx={styles.icon}
+        color="primary"
+        onClick={() => setActiveModal(false)}
       />
-      <Typography variant="h6">Add new customer</Typography>
+      <Typography variant="h5" color="primary">
+        Add new customer
+      </Typography>
       {inputs.map((input) => (
         <Input data={data} setData={setData} input={input} />
       ))}
-      <Button variant="outlined" sx={{ marginTop: "30px" }}>
+      <InputSelect categories={categories} data={data} setData={setData} />
+      <Button variant="outlined" type="submit" sx={{ marginTop: "30px" }}>
         send
       </Button>
     </Box>

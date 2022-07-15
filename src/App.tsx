@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, CssBaseline } from "@mui/material";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard";
@@ -20,8 +21,12 @@ export default function App(): JSX.Element {
       h2: {
         fontFamily: "Indie Flower, cursive",
       },
-      h6: {
+      h4: {
         fontSize: "20px",
+      },
+      h6: {
+        fontSize: "15px",
+        color: "primary",
       },
     },
     components: {
@@ -42,6 +47,7 @@ export default function App(): JSX.Element {
           <Route path="/" element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </ThemeProvider>
   );
 }

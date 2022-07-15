@@ -1,8 +1,6 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
-const baseAPI = axios.create({
-  baseURL: process.env.BASE_API_URL || "http://localhost:5000",
-});
+import baseAPI from "./api";
 
 export interface Customer {
   _id?: string;

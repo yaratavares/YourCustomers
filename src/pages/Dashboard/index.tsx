@@ -27,14 +27,13 @@ export default function Dashboard(): JSX.Element {
   const [activeModal, setActiveModal] = useState(false);
   // confetti();
 
-  async function initPage() {
+  async function reloadPage() {
     const response = await getCustomers();
     setCustomers(response.data);
-    console.log();
   }
 
   useEffect(() => {
-    initPage();
+    reloadPage();
   }, []);
 
   return (
@@ -48,12 +47,19 @@ export default function Dashboard(): JSX.Element {
         Add new customer
       </LoadingButton>
       <BasicModal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <CreateCustomer />
+        <CreateCustomer
+          setActiveModal={setActiveModal}
+          reloadPage={reloadPage}
+        />
       </BasicModal>
       {customersLoading
         ? ""
         : customers.map((one: Customer) => (
-            <CustomerCard key={one._id} customer={one} />
+            <CustomerCard
+              key={one._id}
+              customer={one}
+              reloadPage={reloadPage}
+            />
           ))}
     </Box>
   );

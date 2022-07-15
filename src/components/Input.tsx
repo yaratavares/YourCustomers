@@ -24,15 +24,14 @@ export default function Input({ input, data, setData }: Props) {
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    setData({ ...data, [e.target.type]: e.target.value });
+    setData({ ...data, [input.type]: e.target.value });
   }
 
   return (
     <TextField
       id={`outlined-basic-${input.label}`}
       sx={styles.input}
-      label={input.type}
-      type={input.type}
+      label={input.label}
       variant="outlined"
       onChange={(e) => handleInputChange(e)}
     />

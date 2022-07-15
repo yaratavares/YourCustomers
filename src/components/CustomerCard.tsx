@@ -40,7 +40,7 @@ export function CustomerCard({ customer }: Props) {
   return (
     <Box sx={styles.box}>
       <Paper sx={styles.paper} elevation={4}>
-        <Typography variant="h6">{customer.name}</Typography>
+        <Typography variant="h5">{customer.name}</Typography>
         <Box sx={styles.container}>
           {customer.idCategory === "Vip" ? (
             <Chip label="Vip" variant="outlined" sx={styles.chip} />

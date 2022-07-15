@@ -29,6 +29,7 @@
         "camelcase": "off",
         "import/no-unresolved": "error",
         "no-underscore-dangle": "off",
+        "react/jsx-no-bind": "off",
         "@typescript-eslint/naming-convention": [
         "error",
         {
