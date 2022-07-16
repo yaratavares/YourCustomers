@@ -75,7 +75,7 @@ export function CreateCustomer({
     e.preventDefault();
 
     const validated = validateDataCustomers(data);
-    if (data?._id) {
+    if (data?._id && validated === true) {
       const dataUpdate = { ...data };
       const id = dataUpdate._id;
       delete dataUpdate._id;
