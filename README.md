@@ -3,7 +3,7 @@
 <p align="center">
     <a href="https://wakatime.com/badge/user/97595b44-027b-4695-a588-53e9c884f7e2/project/c160d075-a9bb-4179-9b5b-cf607f0c2962"><img src="https://wakatime.com/badge/user/97595b44-027b-4695-a588-53e9c884f7e2/project/c160d075-a9bb-4179-9b5b-cf607f0c2962.svg"    alt="wakatime"></a>
     <img alt="Repository size" src="https://img.shields.io/github/repo-size/yaratavares/YourCustomers">
-    <a href="https://github.com/yaratavares/YourCustomers/commits/main">
+    <a href="https://github.com/yaratavares/YourCustomers/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/yaratavares/YourCustomers
 ">
   </a>
@@ -34,6 +34,8 @@ No app YourCustomers você pode obter uma lista de todos os seus clientes, adici
   - [x] DELETE
 
 - [x] Utilizando Typescript
+
+- [x] Utilizando material-ui
 
 ---
 ## 🎨 Layout
