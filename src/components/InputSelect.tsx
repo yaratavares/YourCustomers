@@ -19,10 +19,10 @@ export default function InputSelect({ categories, data, setData }: Props) {
 
   return (
     <FormControl fullWidth sx={{ marginTop: "20px" }}>
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+      <InputLabel id="demo-simple-select-label">Category</InputLabel>
       <Select
         labelId="demo-simple-select-label"
-        label="Age"
+        label="Category"
         onChange={handleChange}
       >
         {categories.map((category) => (

@@ -1,17 +1,33 @@
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
+import { SetStateAction } from "react";
 import toast from "react-hot-toast";
 
 import useDeleteCustomer from "../hooks/api/useDeleteCustomer";
 import { Customer } from "../services/customerApi";
 
+const styles = {
+  box: { display: "flex", flexDirection: "column" },
+  boxIcons: { display: "flex", justifyContent: "flex-end" },
+  icons: { marginRight: "10px" },
+};
+
 interface Props {
   customer: Customer;
+  reloadPage: () => Promise<void>;
+  setActiveModal: React.Dispatch<SetStateAction<boolean>>;
+  setClickUpdate: React.Dispatch<SetStateAction<boolean>>;
 }
 
-export function CustomerInfos({ customer }: Props) {
+export function CustomerInfos({
+  customer,
+  reloadPage,
+  setActiveModal,
+  setClickUpdate,
+}: Props) {
   const { deleteCustomer } = useDeleteCustomer();
 
   async function handleClickDelete() {
@@ -19,17 +35,25 @@ export function CustomerInfos({ customer }: Props) {
     if (confirm) {
       await deleteCustomer(customer._id);
       toast.success("Customer deleted");
+      await reloadPage();
+      setActiveModal(false);
     }
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+    <Box sx={styles.box}>
+      <Box sx={styles.boxIcons}>
         <DeleteIcon
-          sx={{ marginRight: "10px" }}
+          color="primary"
+          sx={styles.icons}
           onClick={() => handleClickDelete()}
         />
-        <BorderColorIcon />
+        <BorderColorIcon
+          color="primary"
+          sx={styles.icons}
+          onClick={() => setClickUpdate(true)}
+        />
+        <CloseOutlinedIcon onClick={() => setActiveModal(false)} />
       </Box>
       <Typography variant="h6" color="primary">
         Name

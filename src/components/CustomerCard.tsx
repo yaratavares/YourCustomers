@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 import { Customer } from "../services/customerApi";
-import { CustomerInfos } from "./CustomerInfos";
 import BasicModal from "./Modal";
+import { UpdateCustomer } from "./UpdateCustomer";
 
 const styles = {
   box: {
@@ -32,9 +32,10 @@ const styles = {
 
 interface Props {
   customer: Customer;
+  reloadPage: () => Promise<void>;
 }
 
-export function CustomerCard({ customer }: Props) {
+export function CustomerCard({ customer, reloadPage }: Props) {
   const [activeModal, setActiveModal] = useState(false);
 
   return (
@@ -57,7 +58,11 @@ export function CustomerCard({ customer }: Props) {
         </Box>
       </Paper>
       <BasicModal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <CustomerInfos customer={customer} />
+        <UpdateCustomer
+          setActiveModal={setActiveModal}
+          reloadPage={reloadPage}
+          customer={customer}
+        />
       </BasicModal>
     </Box>
   );

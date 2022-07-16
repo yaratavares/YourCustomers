@@ -4,7 +4,7 @@ import { SetStateAction } from "react";
 import { CreateCustomerInterface } from "../services/customerApi";
 
 export interface InputInformation {
-  type: string;
+  type: "name" | "email" | "number" | "zip" | "street" | "city" | "state";
   label: string;
 }
 
@@ -33,6 +33,7 @@ export default function Input({ input, data, setData }: Props) {
       sx={styles.input}
       label={input.label}
       variant="outlined"
+      defaultValue={data[input.type] || ""}
       onChange={(e) => handleInputChange(e)}
     />
   );

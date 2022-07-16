@@ -6,6 +6,7 @@ import { FormEvent, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import useCreateCustomer from "../hooks/api/useCreateCustomer";
+import useUpdateCustomer from "../hooks/api/useUpdateCustomer";
 import { Category, getCategories } from "../services/categoryApi";
 import { CreateCustomerInterface } from "../services/customerApi";
 import validateDataCustomers from "../validation/validateDataCustomer";
@@ -34,23 +35,30 @@ const styles = {
 interface Props {
   setActiveModal: React.Dispatch<SetStateAction<boolean>>;
   reloadPage: () => Promise<void>;
+  customer: CreateCustomerInterface | null;
 }
 
 export function CreateCustomer({
   setActiveModal,
   reloadPage,
+  customer,
 }: Props): JSX.Element {
-  const [data, setData] = useState<CreateCustomerInterface>({
-    name: "",
-    email: "",
-    number: "",
-    idCategory: "",
-    street: "",
-    city: "",
-    state: "",
-    zip: "",
-  });
+  const [data, setData] = useState<CreateCustomerInterface>(
+    customer === null
+      ? {
+          name: "",
+          email: "",
+          number: "",
+          idCategory: "",
+          street: "",
+          city: "",
+          state: "",
+          zip: "",
+        }
+      : customer
+  );
   const [categories, setCategories] = useState<Category[]>([]);
+  const { updateCustomer, updateCustomerLoading } = useUpdateCustomer();
   const { createCustomer, createCustomerLoading } = useCreateCustomer();
 
   async function initCategories() {
@@ -66,6 +74,16 @@ export function CreateCustomer({
     e.preventDefault();
 
     const validated = validateDataCustomers(data);
+
+    if (data?._id) {
+      const id = data._id;
+      delete data._id;
+      await updateCustomer(id, data);
+      toast.success("Edited customer");
+      setActiveModal(false);
+      return;
+    }
+
     if (validated === true) {
       await createCustomer(data);
       toast.success("New customer added");

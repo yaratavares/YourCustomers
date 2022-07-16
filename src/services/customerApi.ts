@@ -19,6 +19,7 @@ interface Address {
 }
 
 export interface CreateCustomerInterface {
+  _id?: string;
   name: string;
   email: string;
   number: string;
