@@ -3,13 +3,14 @@
   width: 15px;
   height: 15px;
   background: red;
-  position: absolute;
+  position: fixed;
   top: -20px;
   left: 0;
   opacity: 1;
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   z-index: -1;
   animation: confetti 10s ease-in infinite;
+  border: 1px solid transparent;
 }
 
 @keyframes confetti {

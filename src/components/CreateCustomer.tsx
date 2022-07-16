@@ -29,6 +29,7 @@ const styles = {
     position: "absolute",
     top: "15px",
     right: "12px",
+    cursor: "pointer",
   },
 };
 

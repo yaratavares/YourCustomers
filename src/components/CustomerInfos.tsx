@@ -12,7 +12,7 @@ import { Customer } from "../services/customerApi";
 const styles = {
   box: { display: "flex", flexDirection: "column" },
   boxIcons: { display: "flex", justifyContent: "flex-end" },
-  icons: { marginRight: "10px" },
+  icons: { marginRight: "10px", cursor: "pointer" },
 };
 
 interface Props {
@@ -53,7 +53,10 @@ export function CustomerInfos({
           sx={styles.icons}
           onClick={() => setClickUpdate(true)}
         />
-        <CloseOutlinedIcon onClick={() => setActiveModal(false)} />
+        <CloseOutlinedIcon
+          sx={{ cursor: "pointer" }}
+          onClick={() => setActiveModal(false)}
+        />
       </Box>
       <Typography variant="h6" color="primary">
         Name

@@ -4,6 +4,7 @@ import React, { SetStateAction } from "react";
 
 const style = {
   box: {
+    overflow: "auto",
     height: "100vh",
     position: "absolute" as const,
     top: "50%",
