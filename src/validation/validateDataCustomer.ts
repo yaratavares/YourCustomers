@@ -15,11 +15,15 @@ export default function validateDataCustomers(data: CreateCustomerInterface) {
   ) {
     return toast.error("Fill in the fields!");
   }
+  const regex = /[A-Wa-wy-zY-Z]/;
+  if (data.number.match(regex)) {
+    return toast.error("Invalid telefone number format!");
+  }
   if (!data.email.includes("@")) {
     return toast.error("Invalid email format!");
   }
   if (!(data.zip.length === 8)) {
-    return toast.error("Invalid zip-code format!");
+    return toast.error("Zip-code must contain 8 caracters!");
   }
   return true;
 }
