@@ -14,13 +14,13 @@ import Input, { InputInformation } from "./Input";
 import InputSelect from "./InputSelect";
 
 const inputs: InputInformation[] = [
-  { type: "name", label: "Name" },
-  { type: "number", label: "Number" },
-  { type: "email", label: "Email" },
-  { type: "zip", label: "Zip" },
-  { type: "street", label: "Street" },
-  { type: "city", label: "City" },
-  { type: "state", label: "State" },
+  { type: "name", label: "Name", typeField: "text" },
+  { type: "number", label: "Number", typeField: "text" },
+  { type: "email", label: "Email", typeField: "email" },
+  { type: "zip", label: "Zip", typeField: "number", length: 8 },
+  { type: "street", label: "Street", typeField: "text" },
+  { type: "city", label: "City", typeField: "text" },
+  { type: "state", label: "State", typeField: "text" },
 ];
 
 const styles = {
@@ -59,8 +59,8 @@ export function CreateCustomer({
       : customer
   );
   const [categories, setCategories] = useState<Category[]>([]);
-  const { updateCustomer, updateCustomerLoading } = useUpdateCustomer();
-  const { createCustomer, createCustomerLoading } = useCreateCustomer();
+  const { updateCustomer } = useUpdateCustomer();
+  const { createCustomer } = useCreateCustomer();
 
   async function initCategories() {
     const result = await getCategories();
@@ -75,12 +75,13 @@ export function CreateCustomer({
     e.preventDefault();
 
     const validated = validateDataCustomers(data);
-
     if (data?._id) {
-      const id = data._id;
-      delete data._id;
-      await updateCustomer(id, data);
+      const dataUpdate = { ...data };
+      const id = dataUpdate._id;
+      delete dataUpdate._id;
+      await updateCustomer(id, dataUpdate);
       toast.success("Edited customer");
+      await reloadPage();
       setActiveModal(false);
       return;
     }
@@ -105,7 +106,7 @@ export function CreateCustomer({
         onClick={() => setActiveModal(false)}
       />
       <Typography variant="h5" color="primary">
-        Add new customer
+        {customer ? "Update customer" : "Add new customer"}
       </Typography>
       {inputs.map((input) => (
         <Input data={data} setData={setData} input={input} />
