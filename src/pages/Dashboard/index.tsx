@@ -35,7 +35,7 @@ export default function Dashboard(): JSX.Element {
   const { getCustomers, customersLoading } = useCustomers();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [activeModal, setActiveModal] = useState(false);
-  // confetti();
+  confetti();
 
   async function reloadPage() {
     const response = await getCustomers();

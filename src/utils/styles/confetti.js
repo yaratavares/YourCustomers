@@ -2,6 +2,8 @@ import "./style.css";
 
 export default function confetti() {
   function addConfetti() {
+    const y = document.createElement("div");
+    y.className = "containetConfetti";
     for (let i = 0; i < 5; i += 1) {
       const c = document.createElement("div");
       c.className = "confetti";
